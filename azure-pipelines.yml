@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '8.x'
+- task: UseRubyVersion@0
+  inputs:
+    versionSpec: '>= 2.5'
+- script: rvm install 2.2
+- script: rvm use 2.2
+- script: gem install hiptest-publisher
+- script: echo "hiptest-publisher -c junit.conf --token=30312522457421115545281733546832459934050145661703934293 --only=tests --test-run-id=242663"
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- script: mvn package 
+
+- script: hiptest-publisher -c junit.conf --token=30312522457421115545281733546832459934050145661703934293 -p "target/surefire-reports/TEST-com.coffeemachine.*.xml" --test-run-id=1358
+
