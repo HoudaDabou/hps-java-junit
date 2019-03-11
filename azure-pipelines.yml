@@ -11,10 +11,10 @@ steps:
   inputs:
     versionSpec: '>= 2.5'
 
-- script: apt-get update
-- script: apt-get install -y openjfx
-- script: apt-get install -y ruby-dev
-- script: apt-get install zlib1g-dev
+- script: sudo apt-get update
+- script: sudo apt-get install -y openjfx
+- script: sudo apt-get install -y ruby-dev
+- script: sudo apt-get install zlib1g-dev
 - script: mvn clean install
 - script: gem install hiptest-publisher
 - script: hiptest-publisher -c junit.conf --token=30312522457421115545281733546832459934050145661703934293 --only=tests --test-run-id=242663
